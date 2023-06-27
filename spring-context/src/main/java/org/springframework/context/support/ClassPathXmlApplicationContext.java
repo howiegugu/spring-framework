@@ -139,6 +139,7 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 			throws BeansException {
 
 		super(parent);
+		// 解析替换里面的占位符
 		setConfigLocations(configLocations);
 		if (refresh) {
 			refresh();

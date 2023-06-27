@@ -433,12 +433,14 @@ public class BeanDefinitionParserDelegate {
 		if (containingBean == null) {
 			checkNameUniqueness(beanName, aliases, ele);
 		}
-
+		// 上面解析id  name 别名 检查名字等等
+		// 进一步解析和bd创建
 		AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean);
 		if (beanDefinition != null) {
 			if (!StringUtils.hasText(beanName)) {
 				try {
 					if (containingBean != null) {
+						// 如果没有设置name 自动生成
 						beanName = BeanDefinitionReaderUtils.generateBeanName(
 								beanDefinition, this.readerContext.getRegistry(), true);
 					}
@@ -512,11 +514,14 @@ public class BeanDefinitionParserDelegate {
 		}
 
 		try {
+			// 创建一个基础得bd 只有跟类相关信息 parent
 			AbstractBeanDefinition bd = createBeanDefinition(className, parent);
-
+			// 继续一大堆标签的解析
+			// 解析bean标签里的东西
 			parseBeanDefinitionAttributes(ele, beanName, containingBean, bd);
 			bd.setDescription(DomUtils.getChildElementValueByTagName(ele, DESCRIPTION_ELEMENT));
 
+			// 解析其他子标签 一大堆
 			parseMetaElements(ele, bd);
 			parseLookupOverrideSubElements(ele, bd.getMethodOverrides());
 			parseReplacedMethodSubElements(ele, bd.getMethodOverrides());

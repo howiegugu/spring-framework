@@ -48,6 +48,7 @@ import org.springframework.lang.Nullable;
  * @see ClassPathResource
  * @see ByteArrayResource
  * @see InputStreamResource
+ * 资源的抽象 一些元信息的描述 流加载能力 getInputStream
  */
 public interface Resource extends InputStreamSource {
 

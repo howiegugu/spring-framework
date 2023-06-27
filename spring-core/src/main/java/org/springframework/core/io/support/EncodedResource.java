@@ -59,6 +59,7 @@ public class EncodedResource implements InputStreamSource {
 	 * @param resource the {@code Resource} to hold (never {@code null})
 	 */
 	public EncodedResource(Resource resource) {
+		// 编码 字符
 		this(resource, null, null);
 	}
 
