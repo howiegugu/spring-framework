@@ -169,7 +169,8 @@ public abstract class AbstractApplicationEventMulticaster
 	 */
 	protected Collection<ApplicationListener<?>> getApplicationListeners(
 			ApplicationEvent event, ResolvableType eventType) {
-
+		// 先到缓存找
+		// 找不到再到bf
 		Object source = event.getSource();
 		Class<?> sourceType = (source != null ? source.getClass() : null);
 		ListenerCacheKey cacheKey = new ListenerCacheKey(eventType, sourceType);
