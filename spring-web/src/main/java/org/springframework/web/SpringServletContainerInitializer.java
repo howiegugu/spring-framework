@@ -109,6 +109,8 @@ import org.springframework.util.ReflectionUtils;
  * @see #onStartup(Set, ServletContext)
  * @see WebApplicationInitializer
  */
+// 根据servlet规范 tomcat在启动时会通过spi加载到
+// 调用onstart  handles type说明我要接收到这种类型进行处理
 @HandlesTypes(WebApplicationInitializer.class)
 public class SpringServletContainerInitializer implements ServletContainerInitializer {
 
@@ -169,6 +171,7 @@ public class SpringServletContainerInitializer implements ServletContainerInitia
 		servletContext.log(initializers.size() + " Spring WebApplicationInitializers detected on classpath");
 		AnnotationAwareOrderComparator.sort(initializers);
 		for (WebApplicationInitializer initializer : initializers) {
+			// 调用 启动自己的容器
 			initializer.onStartup(servletContext);
 		}
 	}

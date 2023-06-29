@@ -527,6 +527,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		long startTime = System.currentTimeMillis();
 
 		try {
+			// 这里刷新容器 由最上层的servlet init方法调用 tomcat会为每个servlet创建对象
 			this.webApplicationContext = initWebApplicationContext();
 			initFrameworkServlet();
 		}
