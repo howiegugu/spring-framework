@@ -271,7 +271,7 @@ public class ContextLoader {
 			logger.info("Root WebApplicationContext: initialization started");
 		}
 		long startTime = System.currentTimeMillis();
-
+		// 这里的逻辑跟servlet的大同小异
 		try {
 			// Store context in local instance variable, to guarantee that
 			// it is available on ServletContext shutdown.

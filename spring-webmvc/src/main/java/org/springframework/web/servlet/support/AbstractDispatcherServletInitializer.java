@@ -57,10 +57,12 @@ public abstract class AbstractDispatcherServletInitializer extends AbstractConte
 	 */
 	public static final String DEFAULT_SERVLET_NAME = "dispatcher";
 
-
+	// 在启动时会被加载进来调用
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
+		// 注册contextLoaderlisten 创建父容器
 		super.onStartup(servletContext);
+		// 注册dispatcher 回调init方法时初始子容器
 		registerDispatcherServlet(servletContext);
 	}
 
@@ -78,10 +80,10 @@ public abstract class AbstractDispatcherServletInitializer extends AbstractConte
 	protected void registerDispatcherServlet(ServletContext servletContext) {
 		String servletName = getServletName();
 		Assert.hasLength(servletName, "getServletName() must not return null or empty");
-
+		// 创建web子容器
 		WebApplicationContext servletAppContext = createServletApplicationContext();
 		Assert.notNull(servletAppContext, "createServletApplicationContext() must not return null");
-
+		// 创建dispatcherServlet
 		FrameworkServlet dispatcherServlet = createDispatcherServlet(servletAppContext);
 		Assert.notNull(dispatcherServlet, "createDispatcherServlet(WebApplicationContext) must not return null");
 		dispatcherServlet.setContextInitializers(getServletApplicationContextInitializers());
@@ -91,7 +93,7 @@ public abstract class AbstractDispatcherServletInitializer extends AbstractConte
 			throw new IllegalStateException("Failed to register servlet with name '" + servletName + "'. " +
 					"Check if there is another servlet registered under the same name.");
 		}
-
+		// 设置 加载过滤器
 		registration.setLoadOnStartup(1);
 		registration.addMapping(getServletMappings());
 		registration.setAsyncSupported(isAsyncSupported());

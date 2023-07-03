@@ -567,6 +567,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 			// A context instance was injected at construction time -> use it
 			wac = this.webApplicationContext;
 			if (wac instanceof ConfigurableWebApplicationContext) {
+				// 设置父子容器
 				ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;
 				if (!cwac.isActive()) {
 					// The context has not yet been refreshed -> provide services such as
@@ -576,6 +577,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 						// the root application context (if any; may be null) as the parent
 						cwac.setParent(rootContext);
 					}
+					// 这里刷新子的 父的在tomcat启动好了就刷新了
 					configureAndRefreshWebApplicationContext(cwac);
 				}
 			}
@@ -836,6 +838,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	 * <p>The default implementation calls {@link #onRefresh},
 	 * triggering a refresh of this servlet's context-dependent state.
 	 * @param event the incoming ApplicationContext event
+	 * 容器刷新完成后开始初始化九大组件
 	 */
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		this.refreshEventReceived = true;
