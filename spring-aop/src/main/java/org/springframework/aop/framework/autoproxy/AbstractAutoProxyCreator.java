@@ -465,6 +465,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 				proxyFactory.setProxyTargetClass(true);
 			}
 			else {
+				// 评估接口
 				evaluateProxyInterfaces(beanClass, proxyFactory);
 			}
 		}
@@ -472,6 +473,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
 		proxyFactory.addAdvisors(advisors);
 		proxyFactory.setTargetSource(targetSource);
+		// 自定义行为
 		customizeProxyFactory(proxyFactory);
 
 		proxyFactory.setFrozen(this.freezeProxy);

@@ -223,6 +223,8 @@ public abstract class AopUtils {
 	 */
 	public static boolean canApply(Pointcut pc, Class<?> targetClass, boolean hasIntroductions) {
 		Assert.notNull(pc, "Pointcut must not be null");
+		// 先进行类级别匹配
+		// AspectJExpressionPointcut
 		if (!pc.getClassFilter().matches(targetClass)) {
 			return false;
 		}
@@ -248,6 +250,7 @@ public abstract class AopUtils {
 			Method[] methods = ReflectionUtils.getAllDeclaredMethods(clazz);
 			for (Method method : methods) {
 				if (introductionAwareMethodMatcher != null ?
+						// aspectj提供的匹配功能
 						introductionAwareMethodMatcher.matches(method, targetClass, hasIntroductions) :
 						methodMatcher.matches(method, targetClass)) {
 					return true;
@@ -308,6 +311,7 @@ public abstract class AopUtils {
 		}
 		List<Advisor> eligibleAdvisors = new ArrayList<>();
 		for (Advisor candidate : candidateAdvisors) {
+			// IntroductionAdvisor 引介增强 类粒度
 			if (candidate instanceof IntroductionAdvisor && canApply(candidate, clazz)) {
 				eligibleAdvisors.add(candidate);
 			}
@@ -318,6 +322,7 @@ public abstract class AopUtils {
 				// already processed
 				continue;
 			}
+			// 这里进行匹配
 			if (canApply(candidate, clazz, hasIntroductions)) {
 				eligibleAdvisors.add(candidate);
 			}
