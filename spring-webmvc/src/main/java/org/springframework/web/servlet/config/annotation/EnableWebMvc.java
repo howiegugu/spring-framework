@@ -98,6 +98,8 @@ import org.springframework.context.annotation.Import;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
+// 导入组件 留有扩展口给子类添加自定义组件
+// 如果只是单纯建立bean 会导致默认组件的不会被加载
 @Import(DelegatingWebMvcConfiguration.class)
 public @interface EnableWebMvc {
 }

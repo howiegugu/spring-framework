@@ -173,6 +173,9 @@ import org.springframework.web.util.UrlPathHelper;
  * @since 3.1
  * @see EnableWebMvc
  * @see WebMvcConfigurer
+ *
+ *
+ * 添加默认组件
  */
 public class WebMvcConfigurationSupport implements ApplicationContextAware, ServletContextAware {
 
@@ -1034,12 +1037,16 @@ public class WebMvcConfigurationSupport implements ApplicationContextAware, Serv
 	 * {@link ViewResolverComposite#resolveViewName(String, Locale)} returns null in order
 	 * to allow other potential {@link ViewResolver} beans to resolve views.
 	 * @since 4.1
+	 *
+	 * 以这个为例 他会把容器中我们自己添加的自定义viewResolver(来源webconfigurer注册) 和默认加载的viewResolver
+	 * 注册到组合viewResolver中去
 	 */
 	@Bean
 	public ViewResolver mvcViewResolver(
 			@Qualifier("mvcContentNegotiationManager") ContentNegotiationManager contentNegotiationManager) {
 		ViewResolverRegistry registry =
 				new ViewResolverRegistry(contentNegotiationManager, this.applicationContext);
+		// 子类实现的
 		configureViewResolvers(registry);
 
 		if (registry.getViewResolvers().isEmpty() && this.applicationContext != null) {

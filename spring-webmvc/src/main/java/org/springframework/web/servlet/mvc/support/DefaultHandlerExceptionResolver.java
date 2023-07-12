@@ -168,7 +168,7 @@ public class DefaultHandlerExceptionResolver extends AbstractHandlerExceptionRes
 	@Nullable
 	protected ModelAndView doResolveException(
 			HttpServletRequest request, HttpServletResponse response, @Nullable Object handler, Exception ex) {
-
+		// 针对特定异常的处理
 		try {
 			if (ex instanceof HttpRequestMethodNotSupportedException) {
 				return handleHttpRequestMethodNotSupported(

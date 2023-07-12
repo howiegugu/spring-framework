@@ -40,11 +40,12 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
  * @since 3.1
  */
 @Configuration(proxyBeanMethods = false)
+// 里面的所有方法都是一个统一逻辑 将各个configurer的行为内容统一组织起来
 public class DelegatingWebMvcConfiguration extends WebMvcConfigurationSupport {
 
 	private final WebMvcConfigurerComposite configurers = new WebMvcConfigurerComposite();
 
-
+	// 这里会去拿到所有的WebMvcConfigurer  WebMvcConfigurer拿来定制mvc
 	@Autowired(required = false)
 	public void setConfigurers(List<WebMvcConfigurer> configurers) {
 		if (!CollectionUtils.isEmpty(configurers)) {
